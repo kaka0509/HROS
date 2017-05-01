@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-4-26 13:03:00 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="org.lzx.hros.domain.Attend" table="ATTEND">
+        <id name="id" type="java.lang.Integer">
+            <column name="attend_id" />
+            <generator class="identity" />
+        </id>
+        <property name="dutyDay" type="java.lang.String" not-null="true" length="50">
+            <column name="duty_day" />
+        </property>
+        <property name="punchTime" type="java.util.Date">
+            <column name="punch_time" />
+        </property>
+        <property name="isCome" type="boolean" not-null="true">
+            <column name="is_come" />
+        </property>
+        <!-- 映射和AttendType之间的关联关系.多个attend属于同一种attendType -->
+        <many-to-one name="type" class="org.lzx.hros.domain.AttendType" not-null="true" lazy="false">
+            <column name="TYPE" />
+        </many-to-one>
+        <!-- 映射和Employee之间的关联关系.多个attend是由同一个employee发起的 -->
+        <many-to-one name="employee" class="org.lzx.hros.domain.Employee" not-null="true" lazy="false">
+            <column name="EMPLOYEE" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

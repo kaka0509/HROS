@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-4-26 13:03:00 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<class name="org.lzx.hros.domain.Application" table="APPLICATION">
+		<id name="id" type="java.lang.Integer">
+			<column name="app_id" />
+			<generator class="identity" />
+		</id>
+		<property name="reason" type="java.lang.String" length="50">
+			<column name="app_reason" />
+		</property>
+		<property name="result" type="boolean">
+			<column name="app_result" />
+		</property>
+		<!-- 映射和attend的关联关系。多个application中可以指向同一次attend打卡记录 -->
+		<many-to-one name="attend" class="org.lzx.hros.domain.Attend"
+			column="attend_id" not-null="true" lazy="false" />
+			
+		<!-- 映射和AttendType的关联关系 .多个application属于同一个attendtype类型 -->
+		<many-to-one name="type" class="org.lzx.hros.domain.AttendType"
+			fetch="join" column="type_id" not-null="true" lazy="false" />
+			
+		<!-- property-ref: 指定关联类的属性名，这个属性将会和本类的主键相对应。 如果没有指定，会使用对方关联类的主键。
+			 property-ref，不是数据库表中的字段名,而是定义的java类中的属性名
+		 -->
+		<!-- 一次application对应一次checkback批复 -->
+		<one-to-one name="check" class="org.lzx.hros.domain.CheckBack"
+			property-ref="app"></one-to-one>
+	</class>
+</hibernate-mapping>

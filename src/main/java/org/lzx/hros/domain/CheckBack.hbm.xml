@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-4-26 13:03:00 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<class name="org.lzx.hros.domain.CheckBack" table="CHECKBACK">
+		<id name="id" type="java.lang.Integer">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="result" type="boolean" not-null="true">
+			<column name="check_result" />
+		</property>
+		<property name="reason" type="java.lang.String" length="50">
+			<column name="check_reason" />
+		</property>
+		
+		<!-- 映射和Application的关联关系.多个批复都是属于同一个application -->
+		<many-to-one name="app" column="app_id" not-null="true"
+			class="org.lzx.hros.domain.Application" unique="true" lazy="false" />
+
+		<!-- 映射和Manager的关联关系.多个批复都是由一个经理锁批的 -->
+		<many-to-one name="manager" class="org.lzx.hros.domain.Manager"
+			not-null="true" lazy="false">
+			<column name="mgr_id" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

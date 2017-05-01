@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-4-26 13:03:00 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<class name="org.lzx.hros.domain.Employee" table="EMPLOYEE"
+		discriminator-value="1">
+		<id name="id" type="java.lang.Integer">
+			<column name="emp_id" />
+			<generator class="identity" />
+		</id>
+		<!-- discriminator 区别员工、经理 -->
+		<discriminator column="emp_type" type="int" />
+		<property name="name" type="java.lang.String" length="50"
+			not-null="true">
+			<column name="emp_name" />
+		</property>
+		<property name="username" type="java.lang.String" length="50"
+			not-null="true" unique="true">
+			<column name="emp_username" />
+		</property>
+		<property name="pass" type="java.lang.String" not-null="true"
+			length="50">
+			<column name="emp_pass" />
+		</property>
+		<property name="salary" type="double" not-null="true">
+			<column name="emp_salary" />
+		</property>
+		<!-- 映射和Manager的关联关系 -->
+		<many-to-one name="manager" class="org.lzx.hros.domain.Manager"
+			column="mgr_id" lazy="false" />
+		<!-- 映射和attend的关联关系 -->
+		<set name="attends" table="ATTEND" inverse="true" lazy="true">
+			<key>
+				<column name="emp_id" />
+			</key>
+			<one-to-many class="org.lzx.hros.domain.Attend" />
+		</set>
+		<!-- 映射和payment的关联关系 -->
+		<set name="payments" table="PAYMENT" inverse="true" lazy="true">
+			<key>
+				<column name="emp_id" />
+			</key>
+			<one-to-many class="org.lzx.hros.domain.Payment" />
+		</set>
+		<!-- 映射Employee的子类Manager -->
+		<subclass name="org.lzx.hros.domain.Manager" discriminator-value="2">
+			<!-- 映射Manager的普通属性 -->
+			<property name="dept" column="dept_name" type="string"
+				length="50" />
+			<!-- 映射和Employee之间的关联关系 -->
+			<set name="employees" inverse="true">
+				<key column="mgr_id" />
+				<one-to-many class="org.lzx.hros.domain.Employee" />
+			</set>
+			<!-- 映射和CheckBack之间的关联关系 -->
+			<set name="checks" inverse="true">
+				<key column="mgr_id" />
+				<one-to-many class="org.lzx.hros.domain.CheckBack" />
+			</set>
+		</subclass>
+	</class>
+</hibernate-mapping>

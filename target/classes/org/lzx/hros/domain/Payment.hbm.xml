@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-4-26 13:03:00 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<class name="org.lzx.hros.domain.Payment" table="PAYMENT">
+		<id name="id" type="java.lang.Integer">
+			<column name="pay_id" />
+			<generator class="identity" />
+		</id>
+		<property name="payMonth" type="java.lang.String" not-null="true"
+			length="50">
+			<column name="PAYMONTH" />
+		</property>
+		<property name="amount" type="double" not-null="true" length="50">
+			<column name="AMOUNT" />
+		</property>
+		<!-- 映射和Employee的关联关系 -->
+		<many-to-one name="employee" column="emp_id"
+			class="org.lzx.hros.domain.Employee" not-null="true" lazy="false" />
+	</class>
+</hibernate-mapping>
