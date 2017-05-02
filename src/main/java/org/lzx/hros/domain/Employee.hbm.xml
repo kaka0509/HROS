@@ -32,7 +32,7 @@
 		<!-- 映射和attend的关联关系 -->
 		<set name="attends" table="ATTEND" inverse="true" lazy="true">
 			<key>
-				<column name="emp_id" />
+				<column name="EMPLOYEE" />
 			</key>
 			<one-to-many class="org.lzx.hros.domain.Attend" />
 		</set>

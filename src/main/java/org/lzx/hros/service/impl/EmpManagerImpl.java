@@ -23,8 +23,9 @@ import org.lzx.hros.service.EmpManager;
 import org.lzx.hros.vo.AttendBean;
 import org.lzx.hros.vo.PaymentBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-
+@Transactional
 public class EmpManagerImpl implements EmpManager {
 
 	
@@ -94,14 +95,17 @@ public class EmpManagerImpl implements EmpManager {
 	/**
 	 * 自动打卡方法，工作日早7点为员工插入旷工记录。员工自主打卡后进行修改。
 	 */
+	
 	public void autoPunch() {
 		System.out.println("自动插入旷工记录!");
 		List<Employee> emps = empDao.findAll();
-		// 获取当前时间
-		String dutyDay = new Date(System.currentTimeMillis()).toString();
+		// 获取当前时间		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// 格式化当前时间
+		String dutyDay = sdf.format(new Date());
 		for (Employee e : emps) {
 			// 获取旷工对应的出勤类型(数据库中对应id为6)
-			AttendType atype = typeDao.get(6);
+			AttendType atype = typeDao.get(6);			
 			Attend a = new Attend();
 			a.setDutyDay(dutyDay);
 			a.setType(atype);
@@ -113,8 +117,9 @@ public class EmpManagerImpl implements EmpManager {
 				a.setIsCome(false);
 			}
 			a.setEmployee(e);
-			attendDao.save(a);
+			attendDao.save(a);			
 		}
+		System.out.println("自动打卡完成");
 	}
 
 	/**

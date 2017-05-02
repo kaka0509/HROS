@@ -66,6 +66,7 @@ public class LoginAction extends ActionSupport {
 			int result = mgr.validLogin(getManager());
 			if (result == EmpManager.LOGIN_EMP) {
 				ctx.getSession().put(WebConstant.USER, manager.getName());
+				//为LEVEL属性赋值，用于拦截器拦截非登陆操作
 				ctx.getSession().put(WebConstant.LEVEL, WebConstant.EMP_LEVEL);
 				setTip("您已经成功登录系统");
 				return EMP_RESULT;

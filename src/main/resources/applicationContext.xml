@@ -65,8 +65,6 @@
 
 	<!-- 配置控制层Action的类 -->
 
-
-
 	<!-- 配置Service层的类 -->
 	<!-- 为之注入DAO组件 -->
 	<bean id="managerTemplate" abstract="true" lazy-init="true"
@@ -135,27 +133,28 @@
 		<!-- 指定Cron表达式：每月3日2时启动工资结算 -->
 		<property name="cronExpression" value="0 0 2 3 * ? *" />
 	</bean>
-
-	<bean id="cronTriggerPunch"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail">
-			<!-- 使用嵌套Bean的方式来定义任务Bean -->
-			<bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-				<!-- 指定任务Bean的实现类 -->
-				<property name="jobClass" value="org.lzx.hros.schedule.PunchJob" />
-				<!-- 为任务Bean注入该类的组合属性 -->
-				<property name="jobDataAsMap">
-					<map>
-						<entry key="empMgr" value-ref="empManager" />
-					</map>
-				</property>
-			</bean>
-		</property>
-		<!-- 指定Cron表达式：周一到周五7点、12点执行调度，自动插入旷工记录 -->
-		<property name="cronExpression" value="0 0 7,12 ? * MON-FRI" />
+	
+	
+	<!-- 定义打卡工作类bean -->
+	<bean id="PunchJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+			<!-- 指定任务Bean的实现类 -->
+			<property name="jobClass" value="org.lzx.hros.schedule.PunchJob" />
+			<!-- 为任务Bean注入该类的组合属性 -->
+			<property name="jobDataAsMap">
+				<map>
+					<entry key="empMgr" value-ref="empManager" />
+				</map>
+			</property>
 	</bean>
-	<!-- 执行实际的调度调度 -->
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+
+	<bean id="cronTriggerPunch"	class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="PunchJob"/>
+		<!-- 指定Cron表达式：周一到周五8点、12点执行调度，自动插入旷工记录 -->
+		<property name="cronExpression" value="0 0 8,12 ? * MON-FRI" />
+	</bean>
+	
+	<!-- 执行实际任务的调度工厂 -->
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="cronTriggerPay" />

@@ -24,7 +24,9 @@ import org.lzx.hros.vo.AppBean;
 import org.lzx.hros.vo.EmpBean;
 import org.lzx.hros.vo.SalaryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class MgrManagerImpl implements MgrManager {
 
 	private ApplicationDao appDao;

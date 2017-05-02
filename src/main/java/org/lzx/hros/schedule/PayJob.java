@@ -10,8 +10,12 @@ public class PayJob extends QuartzJobBean {
 	// 判断作业是否执行的旗标
 	private boolean isRunning = false;
 	// 注入该作业类依赖的业务逻辑组件
-	@Autowired
-	private EmpManager empMgr;
+	private EmpManager empMgr;	
+
+	public void setEmpMgr(EmpManager empMgr) {
+		this.empMgr = empMgr;
+	}
+
 
 	// 定义任务执行体
 	@Override
