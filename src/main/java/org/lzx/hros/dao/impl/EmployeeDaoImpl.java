@@ -42,19 +42,17 @@ public class EmployeeDaoImpl extends MyHibernateDaoSupport implements EmployeeDa
 	/**
 	 * 根据员工姓名查询员工
 	 */
-	public Employee findByName(String name)
-	{
-		List<Employee> emps = (List<Employee>)getHibernateTemplate()
-			.find("from Employee where name = ? " , name);
-		if (emps!= null && emps.size() >= 1)
-		{
+	public Employee findByName(String name) {
+		List<Employee> emps = (List<Employee>) getHibernateTemplate().find("from Employee where name = ? ", name);
+		if (emps != null && emps.size() >= 1) {
 			return emps.get(0);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 根据登录名查找对应员工
+	 * 
 	 * @param emp
 	 * @return
 	 */
@@ -68,9 +66,7 @@ public class EmployeeDaoImpl extends MyHibernateDaoSupport implements EmployeeDa
 	}
 
 	public List<Employee> findByMgr(Manager mgr) {
-		return (List<Employee>)getHibernateTemplate()
-				.find("from Employee as e where "
-				+ "e.manager = ?" , mgr);
+		return (List<Employee>) getHibernateTemplate().find("from Employee as e where " + "e.manager = ?", mgr);
 	}
 
 }

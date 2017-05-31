@@ -17,7 +17,7 @@ public class AppChangeAction extends ActionSupport {
 	@Autowired
 	private EmpManager mgr;
 
-	// 封装所有异动的列表
+	// 封装所有异动的列表（和appChange.jsp中同名，可以直接用于展示）
 	private List types;
 
 	// types属性的setter和getter方法

@@ -47,6 +47,7 @@ public class AddEmpAction extends ActionSupport {
 		// 获取HttpSession中的user属性
 		String mgrName = (String) ctx.getSession().get(WebConstant.USER);
 		// 添加新用户
+		System.out.println("新增员工： "+ emp);
 		mgr.addEmp(emp, mgrName);
 		setTip("新增员工成功");
 		return SUCCESS;
