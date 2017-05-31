@@ -28,7 +28,7 @@
 			<result name="business">/WEB-INF/content/error.jsp</result>
 			<result name="root">/WEB-INF/content/error.jsp</result>
 			<!-- 定义login逻辑视图对应的视图资源 -->
-			<result name="login">/WEB-INF/content/login2.jsp</result>
+			<result name="login">/WEB-INF/content/login.jsp</result>
 		</global-results>
 
 		<!-- 定义全局异常映射 -->
